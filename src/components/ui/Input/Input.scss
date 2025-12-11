@@ -1,0 +1,14 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.input {
+  width: 100%;
+  border-radius: $radius-md;
+  border: 1px solid $border-color-light;
+  font-size: 13px;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}

@@ -1,0 +1,12 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.search-page {
+  min-height: 100vh;
+  padding: $spacing-xl;
+
+  &__container {
+    width: 100%;
+    @include mix.flexCenter;
+  }
+}

@@ -1,0 +1,69 @@
+$font-family: "Inter", sans-serif;
+$font-weights: (
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+);
+
+@mixin font(
+  $size,
+  $weight: regular,
+  $lh: null,
+  $ls: null,
+  $family: $font-family
+) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: map-get($font-weights, $weight);
+
+  $font-weight: map-get($font-weights, $weight);
+  @if $font-weight {
+    font-weight: $font-weight;
+  } @else {
+    font-weight: map-get($font-weights, regular);
+    @warn "Font weight '#{$weight}' not found. Using 'regular' instead.";
+  }
+
+  @if $lh != null {
+    line-height: $lh;
+  }
+  @if $ls != null {
+    letter-spacing: $ls;
+  }
+}
+
+@mixin flex(
+  $direction: row,
+  $align: stretch,
+  $justify: flex-start,
+  $wrap: nowrap,
+  $gap: null
+) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin flexCenter {
+  @include flex(row, center, center);
+}
+
+@mixin flexBetween {
+  @include flex(row, center, space-between);
+}
+
+@mixin flexColumn($gap: null) {
+  @include flex(column, stretch, flex-start, nowrap, $gap);
+}
+
+@mixin flexRow($gap: null) {
+  @include flex(row, center, flex-start, nowrap, $gap);
+}

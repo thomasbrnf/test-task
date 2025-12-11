@@ -1,0 +1,46 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.button {
+  @include mix.font(14px, medium, 1.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: $color-primary;
+    color: $bg-white;
+
+    &:hover:not(:disabled) {
+      background: darken($color-primary, 10%);
+    }
+
+    &:active:not(:disabled) {
+      background: darken($color-primary, 15%);
+    }
+  }
+
+  &--small {
+    padding: $spacing-sm $spacing-md;
+    font-size: 13px;
+  }
+
+  &--medium {
+    padding: $spacing-md $spacing-xl;
+  }
+
+  &--large {
+    padding: $spacing-lg $spacing-2xl;
+    font-size: 16px;
+  }
+}

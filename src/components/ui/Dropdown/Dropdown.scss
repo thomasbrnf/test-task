@@ -1,0 +1,70 @@
+@use "@/assets/styles/variables" as *;
+
+.dropdown {
+  background: $bg-white;
+  border: 1px solid $border-color-light;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $bg-light-gray;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $scrollbar-thumb;
+      border-radius: 3px;
+
+      &:hover {
+        background: $scrollbar-thumb-hover;
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover,
+    &.highlighted {
+      background-color: $bg-light-gray;
+    }
+
+    &:active {
+      background-color: $border-color-light;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $bg-light-gray;
+    }
+  }
+
+  &__loading {
+    padding: 16px;
+    text-align: center;
+    color: $color-text-secondary;
+    font-size: 14px;
+  }
+
+  &__empty {
+    padding: 16px;
+    text-align: center;
+    color: $color-text-secondary;
+    font-size: 14px;
+  }
+}

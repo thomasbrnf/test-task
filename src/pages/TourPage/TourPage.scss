@@ -1,0 +1,6 @@
+@use "@/assets/styles/variables" as *;
+
+.tour-page {
+  min-height: 100vh;
+  padding: $spacing-xl;
+}

@@ -1,0 +1,15 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.search-tours-form {
+  border-radius: $radius-md;
+  background-color: $bg-white;
+  @include mix.flexRow($spacing-xl);
+  width: fit-content;
+  padding: $spacing-xl;
+  border: 1.5px solid $border-color-light;
+
+  &__title {
+    @include mix.font(14px, semibold);
+  }
+}
