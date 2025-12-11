@@ -28,7 +28,6 @@ export const useGeoSearch = () => {
     }
   };
   const search = async (query: string) => {
-    console.log("test");
     if (!query) {
       await loadCountries();
       return;

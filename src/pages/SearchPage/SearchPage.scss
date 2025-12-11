@@ -7,6 +7,6 @@
 
   &__container {
     width: 100%;
-    @include mix.flexCenter;
+    @include mix.flex(column, center, center)
   }
 }

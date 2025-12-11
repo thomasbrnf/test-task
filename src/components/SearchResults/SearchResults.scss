@@ -1,0 +1,9 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.search-results {
+  width: 100%;
+  max-width: 700px;
+  margin-top: $spacing-xl;
+  padding: $spacing-xl;
+}
