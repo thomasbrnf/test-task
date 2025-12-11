@@ -12,7 +12,7 @@ export interface City {
   type: "city";
 }
 
-export interface Hotel {
+export interface GeoHotel {
   id: number;
   name: string;
   image: string;
@@ -23,4 +23,4 @@ export interface Hotel {
   type: "hotel";
 }
 
-export type GeoEntity = Country | City | Hotel;
+export type GeoEntity = Country | City | GeoHotel;

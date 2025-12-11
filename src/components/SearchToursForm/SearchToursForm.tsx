@@ -6,8 +6,12 @@ import GeoSearchInput from "../GeoSearchInput";
 import "./SearchToursForm.scss";
 
 const SearchToursForm = () => {
-  const { destination, setDestination, selectedDestination, setSelectedDestination } =
-    useSearchStore();
+  const {
+    destination,
+    setDestination,
+    selectedDestination,
+    setSelectedDestination,
+  } = useSearchStore();
 
   const { search, isLoading } = useSearch();
 

@@ -1,6 +1,6 @@
 import { getCountries, searchGeo } from "../lib/api";
 import type { CountryAPI, CityAPI, HotelAPI } from "../types/api";
-import type { GeoEntity, Country, City, Hotel } from "../types/geo";
+import type { GeoEntity, Country, City, GeoHotel } from "../types/geo";
 
 const mapCountryToGeoEntity = (country: CountryAPI): Country => ({
   ...country,
@@ -12,7 +12,7 @@ const mapCityToGeoEntity = (city: CityAPI): City => ({
   type: "city",
 });
 
-const mapHotelToGeoEntity = (hotel: HotelAPI): Hotel => ({
+const mapHotelToGeoEntity = (hotel: HotelAPI): GeoHotel => ({
   id: hotel.id,
   name: hotel.name,
   image: hotel.img,

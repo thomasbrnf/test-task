@@ -1,0 +1,56 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.tour-card {
+  display: flex;
+  flex-direction: column;
+  background: $bg-white;
+  border: 1px solid $border-color-light;
+  border-radius: $radius-md;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  ʼ &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &__image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  &__content {
+    @include mix.flexColumn($spacing-sm);
+    padding: $spacing-md;
+  }
+
+  &__name {
+    @include mix.font(14px, semibold);
+    color: $color-text-primary;
+  }
+
+  &__location {
+    @include mix.font(12px, regular);
+    color: $color-text-secondary;
+  }
+
+  &__date {
+    @include mix.font(12px, regular);
+    color: $color-text-secondary;
+  }
+
+  &__price {
+    @include mix.font(16px, bold);
+  }
+
+  &__link {
+    @include mix.font(13px, medium);
+    color: $color-primary;
+    text-decoration: none;
+    margin-top: $spacing-sm;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { GeoEntity, TourPrice } from "@/types";
+import type { GeoEntity, Hotel, TourPrice } from "@/types";
 
 type SearchStatus = "idle" | "loading" | "success" | "error";
 
@@ -11,6 +11,8 @@ interface SearchState {
   results: TourPrice[];
   error: string | null;
 
+  hotels: Hotel[];
+
   setDestination: (value: string) => void;
   setSelectedDestination: (entity: GeoEntity | null) => void;
 
@@ -18,6 +20,8 @@ interface SearchState {
   setResults: (results: TourPrice[]) => void;
   setError: (error: string | null) => void;
   resetSearch: () => void;
+
+  setHotels: (hotels: Hotel[]) => void;
 }
 
 const initialState = {
@@ -26,6 +30,7 @@ const initialState = {
   searchStatus: "idle" as SearchStatus,
   results: [],
   error: null,
+  hotels: [],
 };
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -44,4 +49,6 @@ export const useSearchStore = create<SearchState>((set) => ({
       results: [],
       error: null,
     }),
+
+  setHotels: (hotels) => set({ hotels }),
 }));
