@@ -1,0 +1,42 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.hotel-info {
+  display: flex;
+  flex-direction: column;
+
+  &--small {
+    .hotel-info__name {
+      @include mix.font(14px, semibold);
+    }
+
+    .hotel-info__location {
+      @include mix.font(12px, regular);
+    }
+  }
+
+  &--large {
+    gap: $spacing-sm;
+
+    .hotel-info__name {
+      @include mix.font(24px, bold);
+    }
+
+    .hotel-info__location {
+      @include mix.font(14px, regular);
+    }
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__name {
+    color: $color-text-primary;
+  }
+
+  &__location {
+    color: $color-text-secondary;
+  }
+}

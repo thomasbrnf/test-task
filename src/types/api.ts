@@ -20,6 +20,17 @@ export interface HotelAPI {
   countryName: string;
 }
 
+export interface HotelDetailsAPI extends HotelAPI {
+  description: string;
+  services: {
+    wifi: string;
+    aquapark: string;
+    tennis_court: string;
+    laundry: string;
+    parking: string;
+  };
+}
+
 export interface PriceAPI {
   id: string;
   hotelID: string;

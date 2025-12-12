@@ -6,4 +6,12 @@ export interface Hotel {
   cityName: string;
   countryId: string;
   countryName: string;
+  description?: string;
+  services?: {
+    wifi: string;
+    aquapark: string;
+    tennis_court: string;
+    laundry: string;
+    parking: string;
+  };
 }

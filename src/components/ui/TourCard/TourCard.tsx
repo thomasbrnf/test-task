@@ -1,7 +1,10 @@
-import { formatDate, formatPrice } from "@/utils";
+import { Link } from "react-router-dom";
 import type { TourPrice, Hotel } from "@/types";
 
 import "./TourCard.scss";
+import HotelInfo from "../HotelInfo";
+import TourInfo from "../TourInfo";
+import HotelImage from "../HotelImage";
 
 interface TourCardProps {
   tour: TourPrice;
@@ -9,22 +12,22 @@ interface TourCardProps {
 }
 
 const TourCard = ({ tour, hotel }: TourCardProps) => {
-  console.log({ tour }, { hotel });
   return (
     <article className="tour-card">
-      <img className="tour-card__image" src={hotel.image} alt={hotel.name} />
+      <HotelImage
+        src={hotel.image}
+        loading="lazy"
+        size="small"
+        alt={hotel.name}
+      />
+
       <div className="tour-card__content">
-        <h3 className="tour-card__name">{hotel.name}</h3>
-        <p className="tour-card__location">
-          {hotel.countryName}, {hotel.cityName}
-        </p>
-        <p className="tour-card__date">{formatDate(tour.startDate)}</p>
-        <p className="tour-card__price">
-          {formatPrice(tour.amount, tour.currency)}
-        </p>
-        <a className="tour-card__link" href={`/tour/${tour.id}/${hotel.id}`}>
+        <HotelInfo hotel={hotel} size="small" />
+        <TourInfo tour={tour} layout="inline" />
+
+        <Link className="tour-card__link" to={`/tour/${tour.id}/${hotel.id}`}>
           Відкрити ціну
-        </a>
+        </Link>
       </div>
     </article>
   );

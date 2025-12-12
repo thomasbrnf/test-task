@@ -1,0 +1,35 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.hotel-services {
+  &__title {
+    @include mix.font(16px, semibold);
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: $bg-light-gray;
+    border-radius: $radius-sm;
+  }
+
+  &__icon {
+    @include mix.font(12px, bold);
+    color: $color-primary;
+  }
+
+  &__name {
+    @include mix.font(12px, regular);
+    color: $color-text-primary;
+  }
+}

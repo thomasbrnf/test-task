@@ -1,5 +1,5 @@
-import { getHotels } from "@/lib/api";
-import type { Hotel, HotelAPI, HotelsMap } from "@/types";
+import { getHotel, getHotels } from "@/lib/api";
+import type { Hotel, HotelAPI, HotelDetailsAPI, HotelsMap } from "@/types";
 
 const mapHotelToFrontend = (hotel: HotelAPI): Hotel => ({
   id: hotel.id,
@@ -9,6 +9,18 @@ const mapHotelToFrontend = (hotel: HotelAPI): Hotel => ({
   cityName: hotel.cityName,
   countryId: hotel.countryId,
   countryName: hotel.countryName,
+});
+
+export const mapHotelDetailsToFrontend = (hotel: HotelDetailsAPI): Hotel => ({
+  id: hotel.id,
+  name: hotel.name,
+  image: hotel.img,
+  cityId: hotel.cityId,
+  cityName: hotel.cityName,
+  countryId: hotel.countryId,
+  countryName: hotel.countryName,
+  description: hotel.description,
+  services: hotel.services,
 });
 
 const hotelsCache = new Map<string, Hotel[]>();
@@ -32,6 +44,23 @@ export const fetchHotelsByCountry = async (
   hotelsCache.set(countryId, hotels);
 
   return hotels;
+};
+
+export const fetchHotelById = async (hotelId: string): Promise<Hotel> => {
+  const id = Number(hotelId);
+  if (Number.isNaN(id)) {
+    throw new Error("Invalid hotel id");
+  }
+
+  const response = await getHotel(id);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch hotel");
+  }
+
+  const data: HotelDetailsAPI = await response.json();
+
+  return mapHotelDetailsToFrontend(data);
 };
 
 export const getHotelById = (

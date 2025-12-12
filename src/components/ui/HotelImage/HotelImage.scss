@@ -1,0 +1,26 @@
+@use "@/assets/styles/mixins" as mix;
+@use "@/assets/styles/variables" as *;
+
+.hotel-image {
+  &--small {
+    overflow: hidden;
+    border-radius: $radius-md $radius-md 0 0;
+  }
+
+  &--large {
+    overflow: hidden;
+    border-radius: $radius-md;
+  }
+
+  &__img,
+  &__placeholder {
+    width: 100%;
+    height: 150px;
+    display: block;
+    object-fit: cover;
+  }
+
+  &__placeholder {
+    background: $bg-light-gray;
+  }
+}

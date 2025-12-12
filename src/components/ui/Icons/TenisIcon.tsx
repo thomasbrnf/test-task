@@ -1,0 +1,24 @@
+import type { IconProps } from ".";
+
+const TenisIcon = ({
+  width = 20,
+  height = 20,
+  color = "#6c757d",
+  className,
+}: IconProps) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      fill={color}
+      className={className}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12,2a9.81,9.81,0,0,1,6.5,2.4A10.13,10.13,0,0,0,15,12a10.13,10.13,0,0,0,3.5,7.6A10,10,0,0,1,12,22a9.81,9.81,0,0,1-6.5-2.4A10.13,10.13,0,0,0,9,12,10.13,10.13,0,0,0,5.5,4.4,9.81,9.81,0,0,1,12,2M22,12a9.79,9.79,0,0,1-2.1,6.1A7.64,7.64,0,0,1,17,12a8,8,0,0,1,2.9-6.2A10.52,10.52,0,0,1,22,12M2,12A10.52,10.52,0,0,1,4.1,5.8,8,8,0,0,1,7,12a7.64,7.64,0,0,1-2.9,6.1A9.79,9.79,0,0,1,2,12Z" />
+      <rect width="24" height="24" fill="none" />
+    </svg>
+  );
+};
+
+export default TenisIcon;
