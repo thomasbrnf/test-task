@@ -1,6 +1,6 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useSearchStore } from "@/store";
-import { executeSearch } from "@/services/searchService";
+import { executeSearch, stopSearch } from "@/services/searchService";
 import { fetchHotelsByCountry } from "@/services";
 
 export const useSearch = () => {
@@ -9,14 +9,31 @@ export const useSearch = () => {
     searchStatus,
     results,
     error,
+    activeToken,
+    isCancelling,
+    activeSearchId,
     setSearchStatus,
     setResults,
     setError,
     resetSearch,
     setHotels,
+    setIsCancelling,
+    setActiveToken,
+    setActiveSearchId,
   } = useSearchStore();
 
-  const abortControllerRef = useRef<AbortController | null>(null);
+  const cancelSearchIfActive = useCallback(async (): Promise<void> => {
+    if (!activeToken) return;
+    setIsCancelling(true);
+    try {
+      await stopSearch(activeToken);
+      setActiveToken(null);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsCancelling(false);
+    }
+  }, [activeToken, setIsCancelling, setActiveToken]);
 
   const search = useCallback(async () => {
     if (!selectedDestination) return;
@@ -38,13 +55,13 @@ export const useSearch = () => {
       return;
     }
 
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
+    if (activeToken) {
+      await cancelSearchIfActive();
     }
-    abortControllerRef.current = new AbortController();
 
     resetSearch();
     setSearchStatus("loading");
+    setActiveSearchId(selectedDestination.id);
 
     try {
       const [tourResults, hotelsData] = await Promise.all([
@@ -52,9 +69,14 @@ export const useSearch = () => {
         fetchHotelsByCountry(countryId),
       ]);
 
+      if (!tourResults) {
+        return;
+      }
+
       setResults(tourResults);
       setHotels(hotelsData);
       setSearchStatus("success");
+      setActiveToken(null);
     } catch (err) {
       const message =
         err instanceof Error
@@ -66,18 +88,23 @@ export const useSearch = () => {
     }
   }, [
     selectedDestination,
+    activeToken,
+    cancelSearchIfActive,
     resetSearch,
     setSearchStatus,
     setResults,
     setError,
     setHotels,
+    setActiveSearchId,
   ]);
 
   return {
     search,
     isIdle: searchStatus === "idle",
-    isLoading: searchStatus === "loading",
     isError: searchStatus === "error",
+    activeSearchId,
+    isLoading: searchStatus === "loading" || isCancelling,
+    isCancelling,
     isEmpty: searchStatus === "success" && results.length === 0,
     isSuccess: searchStatus === "success" && results.length > 0,
     results,

@@ -11,9 +11,10 @@ const SearchToursForm = () => {
     setDestination,
     selectedDestination,
     setSelectedDestination,
+    activeSearchId,
   } = useSearchStore();
 
-  const { search, isLoading } = useSearch();
+  const { search, isCancelling, isLoading } = useSearch();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +25,14 @@ const SearchToursForm = () => {
 
     search();
   };
+
+  const isSearchInProgressForCurrentSelection =
+    isLoading && selectedDestination?.id === activeSearchId;
+
+  const isButtonDisabled =
+    !selectedDestination ||
+    isCancelling ||
+    isSearchInProgressForCurrentSelection;
 
   return (
     <form className="search-tours-form" onSubmit={handleSubmit}>
@@ -40,11 +49,15 @@ const SearchToursForm = () => {
 
       <Button
         type="submit"
-        disabled={!selectedDestination || isLoading}
+        disabled={isButtonDisabled}
         variant="primary"
         size="medium"
       >
-        {isLoading ? "Пошук..." : "Знайти"}
+        {isCancelling
+          ? "Скасування..."
+          : isSearchInProgressForCurrentSelection
+            ? "Шукаємо..."
+            : "Знайти"}
       </Button>
     </form>
   );

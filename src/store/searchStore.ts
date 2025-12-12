@@ -13,6 +13,11 @@ interface SearchState {
 
   hotels: Hotel[];
 
+  activeToken: string | null;
+  isCancelling: boolean;
+
+  activeSearchId: string | number | null;
+
   setDestination: (value: string) => void;
   setSelectedDestination: (entity: GeoEntity | null) => void;
 
@@ -22,6 +27,10 @@ interface SearchState {
   resetSearch: () => void;
 
   setHotels: (hotels: Hotel[]) => void;
+
+  setActiveToken: (token: string | null) => void;
+  setIsCancelling: (v: boolean) => void;
+  setActiveSearchId: (id: string | number | null) => void;
 }
 
 const initialState = {
@@ -31,6 +40,9 @@ const initialState = {
   results: [],
   error: null,
   hotels: [],
+  activeToken: null,
+  activeSearchId: null,
+  isCancelling: false,
 };
 
 export const useSearchStore = create<SearchState>((set) => ({
@@ -51,4 +63,7 @@ export const useSearchStore = create<SearchState>((set) => ({
     }),
 
   setHotels: (hotels) => set({ hotels }),
+  setActiveToken: (token) => set({ activeToken: token }),
+  setIsCancelling: (v) => set({ isCancelling: v }),
+  setActiveSearchId: (id) => set({ activeSearchId: id }),
 }));

@@ -57,7 +57,11 @@ const SearchResults = () => {
       <div className="search-results">
         <div className="search-results__grid">
           {toursWithHotels.map(({ tour, hotel }) => (
-            <TourCard key={`${tour.id}-${hotel!.id}`} tour={tour} hotel={hotel!} />
+            <TourCard
+              key={`${tour.id}-${hotel!.id}`}
+              tour={tour}
+              hotel={hotel!}
+            />
           ))}
         </div>
       </div>

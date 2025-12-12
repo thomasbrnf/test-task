@@ -1,4 +1,9 @@
-import { getSearchPrices, startSearchPrices } from "@/lib/api";
+import {
+  getSearchPrices,
+  startSearchPrices,
+  stopSearchPrices,
+} from "@/lib/api";
+import { useSearchStore } from "@/store";
 import type {
   GetSearchPricesResponse,
   PriceAPI,
@@ -28,6 +33,23 @@ const isSearchError = (data: unknown): data is SearchError => {
   return typeof data === "object" && data !== null && "error" in data;
 };
 
+const getActiveToken = () => useSearchStore.getState().activeToken;
+
+export const stopSearch = async (token: string) => {
+  try {
+    const res = await stopSearchPrices(token);
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => null);
+      throw new Error(errData?.message ?? "Помилка зупинки пошуку");
+    }
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const initiateSearch = async (
   countryId: string,
 ): Promise<StartSearchResponse> => {
@@ -44,9 +66,16 @@ export const initiateSearch = async (
 export const fetchSearchResults = async (
   token: string,
   retryCount = 0,
-): Promise<TourPrice[]> => {
+): Promise<TourPrice[] | null> => {
+  if (token !== getActiveToken()) {
+    return null;
+  }
+
   try {
     const response = await getSearchPrices(token);
+
+    if (token !== getActiveToken()) return null;
+
     const data = await response.json();
 
     if (!response.ok || isSearchError(data)) {
@@ -54,16 +83,30 @@ export const fetchSearchResults = async (
 
       if (error.code === 425 && error.waitUntil) {
         await waitUntil(error.waitUntil);
+
+        if (token !== getActiveToken()) return null;
+
         return fetchSearchResults(token, 0);
       }
 
       throw error;
     }
 
+    if (token !== getActiveToken()) return null;
+
     const result = data as GetSearchPricesResponse;
     return Object.values(result.prices).map(mapPriceToTour);
   } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message.startsWith("Search with this token was not found.")
+    ) {
+      return null;
+    }
+
     if (retryCount < MAX_RETRIES && !isSearchError(error)) {
+      if (token !== getActiveToken()) return null;
+
       return fetchSearchResults(token, retryCount + 1);
     }
     throw error;
@@ -72,9 +115,12 @@ export const fetchSearchResults = async (
 
 export const executeSearch = async (
   countryId: string,
-): Promise<TourPrice[]> => {
+): Promise<TourPrice[] | null> => {
+  const { setActiveToken } = useSearchStore.getState();
+
   const { token, waitUntil: waitTime } = await initiateSearch(countryId);
-  console.log(token, waitTime);
+
+  setActiveToken(token);
 
   await waitUntil(waitTime);
 
